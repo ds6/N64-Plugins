@@ -1,0 +1,34 @@
+{
+	"authors": ["Nijuxi"],
+	"name": "n64-plugins",
+	"dependencies": {
+		"vibe-d": "~>0.10.3"
+	},
+	"libs-windows": ["user32"],
+	"configurations": [
+		{
+			"name": "mp1",
+			"targetType": "dynamicLibrary",
+			"targetName": "MarioParty1",
+			"sourceFiles": ["plugin.d", "marioparty.d", "marioparty1.d"]
+		},
+		{
+			"name": "mp2",
+			"targetType": "dynamicLibrary",
+			"targetName": "MarioParty2",
+			"sourceFiles": ["plugin.d", "marioparty.d", "marioparty2.d"]
+		},
+		{
+			"name": "mp3",
+			"targetType": "dynamicLibrary",
+			"targetName": "MarioParty3",
+			"sourceFiles": ["plugin.d", "marioparty.d", "marioparty3.d"]
+		},
+		{
+			"name": "mg64",
+			"targetType": "dynamicLibrary",
+			"targetName": "MarioGolf64",
+			"sourceFiles": ["plugin.d", "mariogolf.d"]
+		}
+	]
+}
