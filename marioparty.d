@@ -244,6 +244,7 @@ string unformatText(string text) pure {
 
 struct BingoCard {
     string name;
+    string formattedName;
     int bingos;
     int squares;
     Character[] characters;
@@ -478,6 +479,8 @@ class MarioParty(Config, State, Memory, Player) : Game!(Config, State) {
             
             struct Message { BingoCard[] cards; }
 
+            state.characterToName.clear();
+
             state.bingoCards = json.fromJSON!Message().cards;
             state.bingoCards.each!((ref card) {
                 string name = card.name.toUpper();
@@ -492,7 +495,7 @@ class MarioParty(Config, State, Memory, Player) : Game!(Config, State) {
                     if (m == -1) {
                         name.decodeFront;
                     } else {
-                        card.characters ~= CHARS[m];
+                        state.characterToName[CHARS[m]] = card.formattedName;
                         name = name[CHARS[m].to!string.length..$];
                     }
                 }

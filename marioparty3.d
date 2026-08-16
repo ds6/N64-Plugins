@@ -104,6 +104,7 @@ class State {
     string[] boardNames;
     float currentPlayerTurn = 0;
     BingoCard[] bingoCards;
+    string[Character] characterToName;
 }
 
 union Memory {
@@ -603,14 +604,14 @@ class MarioParty3 : MarioParty!(Config, State, Memory, Player) {
                         [c.to!string, c.fullName].each!((charName) {
                             if (!gameText.startsWith(charName)) return;
 
-                            auto card = state.bingoCards.find!(card => card.characters.canFind(c));
-                            if (card.empty) return;
+                            auto n = (c in state.characterToName);
+                            if (!n) return;
 
                             if (m == -1 || charName.length > character.to!string.length) {
                                 m = i;
                                 character = c;
-                                name = card.front.name;
-                                multi = (card.front.characters.length > 1);
+                                name = *n;
+                                multi = (state.characterToName.values.count(name) > 1);
                             }
                         });
                     });
@@ -619,15 +620,10 @@ class MarioParty3 : MarioParty!(Config, State, Memory, Player) {
                         result ~= gameText[0];
                         gameText = gameText[1..$];
                     } else {
-                        auto index1 = name.indexOf("[");
-                        auto index2 = name.indexOf("(");
-                        if (index1 == -1) index1 = name.length;
-                        if (index2 == -1) index2 = name.length;
-                        auto replacement = name[0..min(index1, index2)].strip();
                         if (multi) {
-                            replacement ~= " <BOLD>" ~ character.shortName ~ "<NORMAL>"; 
+                            name ~= " <BOLD>" ~ character.shortName ~ "<NORMAL>";
                         }
-                        result ~= formatText(replacement);
+                        result ~= formatText(name);
                         gameText = gameText[character.to!string.length..$];
                     }
                 }

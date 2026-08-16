@@ -44,6 +44,7 @@ class State {
     ];
     float currentPlayerTurn = 0;
     BingoCard[] bingoCards;
+    string[Character] characterToName;
 }
 
 union PlayerData {

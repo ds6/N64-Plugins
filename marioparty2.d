@@ -80,6 +80,7 @@ class State {
     CustomSpace[] spaces;
     float currentPlayerTurn = 0;
     BingoCard[] bingoCards;
+    string[Character] characterToName;
 }
 
 union Chain {
